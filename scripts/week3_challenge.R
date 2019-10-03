@@ -320,9 +320,16 @@ rough_plot +
     axis.line = element_line(colour = "blue", size = 4)  
     )
 
+## Saving our plots 
+ggsave("figures/my_first_plot.png")
 
+# or 
+ggsave("figures/my_first_plot.png", plot = rough_plot)
 
+# To specify the size of the figure 
+ggsave("figures/my_first_plot.png", plot = rough_plot, width = 12, height = 10, units = "cm")
 
-  
+# You can use the dpi = to choose the dpi
+ggsave("figures/my_first_plot.png", plot = rough_plot, width = 12, height = 10, units = "cm", dpi = 300)
   
 
