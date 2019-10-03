@@ -65,7 +65,6 @@ ggplot(data = gapminder_1977) +
 ggplot(gapminder_1977, aes(x = gdpPercap, y = lifeExp)) +
   geom_point(colour = "blue", size = 5)
 
-
 ggplot(data = gapminder_1977, 
   mapping = aes(x = gdpPercap, 
                 y = lifeExp, 
@@ -76,15 +75,13 @@ ggplot(data = gapminder_1977,
 
 # Challenge 7 #
 # How life expectancy has changed over time?
-
-gapminder
-
 ggplot(gapminder,
        aes(x = year,
            y = lifeExp,
            colour = continent,
            size = pop)) + geom_point(shape = "triangle") 
 
+# Grouped by mean life expectancy per year
 gapminder_by_year <- gapminder %>% 
   group_by(year) %>% 
   summarise(mean_life_Exp = mean(lifeExp))
@@ -94,10 +91,15 @@ ggplot(gapminder_by_year,
        aes( y = mean_life_Exp,
             x = year)) + geom_point(colour = "green", alpha = 1)
 
+# Group by continent and by year 
+gapminder_grouped <- gapminder %>% 
+  group_by(continent, year) %>%  # Use of the 2 x group by 
+  summarise(mean_life_exp = mean(lifeExp))
+gapminder_grouped
 
-
-
-
-
+ggplot(gapminder_grouped,
+       aes( y = mean_life_exp,
+            x = year,
+            colour = continent)) + geom_point()
 
 
