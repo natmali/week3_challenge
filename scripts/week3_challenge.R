@@ -194,8 +194,10 @@ ggplot(data = gapminder,
            colour = continent)) +
   geom_point(shape = "triangle", size = 3) + 
   scale_x_log10() + 
-  geom_smooth(method = "lm", size = 1.5) +
-  scale_colour_manual (values = c("pink", "purple", "green", "blue", "orange"))
+  geom_smooth(method = "lm", size = 1.5, se = FALSE) +
+  scale_colour_manual (values = c("coral", "palegreen2", "cyan", "magenta2", "plum"))
+
+colours()
 
 # There is also a scale_colour_brewer() scale that takes an argument palette that is the name of a ColorBrewer palette. 
 # Select an appropriate colour palette for the continents from ColorBrewer and apply it to your plot instead.
@@ -205,14 +207,92 @@ ggplot(data = gapminder,
            colour = continent)) +
   geom_point(shape = "triangle", size = 3) + 
   scale_x_log10() + 
-  geom_smooth(method = "lm", size = 1.5) +
+  geom_smooth(method = "lm", size = 1.5, se = FALSE) +
   scale_colour_brewer(palette = 3)
 
 
+## Seperating Figures
+#
+a_countries <- filter(gapminder, str_starts(country, "A"))
+a_countries
+
+ggplot(a_countries, 
+       aes(x = year,
+           y = lifeExp,
+           colour = continent,
+           group = country)) +
+  geom_line()
+
+# Now we are going to break this up into seperate panels
+
+ggplot(a_countries, 
+       aes(x = year,
+           y = lifeExp,
+           colour = continent,
+           group = country)) +
+  geom_line() +
+  facet_wrap(~ country) # How we want to break each facet up. In this case it would be country 
+
+# Challenge 12 #
+ggplot( data = gapminder_1977, 
+  mapping = aes(x = gdpPercap, 
+                y = lifeExp, 
+                colour = continent, 
+                size = pop)) +
+  geom_point() +
+  scale_x_log10()
+
+# modify it by (1) using the full gapminder dataset (2) adding a facet_wrap to demonstrate the change through time
+ggplot( data = gapminder, 
+        mapping = aes(x = gdpPercap, 
+                      y = lifeExp, 
+                      colour = continent, 
+                      size = pop)) +
+  geom_point() +
+  scale_x_log10() +
+  facet_wrap(~year)
+
+# Playing with something 
+gapminder_rich <- filter(gapminder_1977, gdpPercap > 30000)
+gapminder_rich
+
+ggplot( data = gapminder_1977, 
+        mapping = aes(x = gdpPercap, 
+                      y = lifeExp, 
+                      colour = continent, 
+                      size = pop,
+                      label = country)) +
+  geom_point() +
+  scale_x_log10() +
+  geom_text(data = gapminder_rich)
+
+
+## Themes
+# Adding our plot to a variable
+rough_plot <- ggplot(a_countries, 
+       aes(x = year,
+           y = lifeExp,
+           colour = continent,
+           group = country)) +
+  geom_line() +
+  facet_wrap(~ country)
+
+rough_plot
+
+rough_plot + scale_color_brewer(palette = "Dark2") # Now you can add additional layers to your plot. However this is not changing 'Rough_plot' itself.
+
+rough_plot + 
+  labs(title = "Fig1",
+       x = "Year",
+       y = "Life Expectancy",
+       colour = "Continent") # Changing the labels. Look at the menue to see the different things that you can change
 
 
 
-  
+
+
+
+
   
   
 
