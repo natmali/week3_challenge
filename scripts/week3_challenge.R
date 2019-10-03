@@ -288,7 +288,37 @@ rough_plot +
        colour = "Continent") # Changing the labels. Look at the menue to see the different things that you can change
 
 
+# Challenge 1 #
+#Modify the code above so that the title is more descriptive
+#Let’s also make sure we acknowledge our sources. Add a caption reading “Data source: Gapminder”
+rough_plot + 
+  labs(title = "Fig1. Life expectancy over time for countires starting with the letter 'A'",
+       x = "Year",
+       y = "Life Expectancy",
+       colour = "Continent",
+       caption = "Data source: Gapminder") 
 
+# Themes
+rough_plot +
+  theme_bw() # Using in built themes 
+
+rough_plot + # Making up your own theme 
+  theme(
+    panel.grid.major = element_blank() # Using element_blank() to remove and element completely 
+  )
+
+# Playing with the theme function
+rough_plot + 
+  labs(title = "Fig1. Life expectancy over time for countires starting with the letter 'A'",
+       x = "Year",
+       y = "Life Expectancy",
+       colour = "Continent",
+       caption = "Data source: Gapminder") +
+  theme(
+    panel.grid.major = element_blank(),
+    plot.title = element_text(size = 4), # Adjust the title size 
+    axis.line = element_line(colour = "blue", size = 4)  
+    )
 
 
 
